@@ -1,1 +1,1 @@
-## notes app
+## Articles app
