@@ -1,0 +1,35 @@
+.header{
+  background-color: aqua;
+  height: fit-content;
+  width: 100vw;
+  padding: 5px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header .header_main_title{
+  font-size: 45px;
+}
+
+.header .header_navbar{
+  background-color: antiquewhite;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  column-gap: 50px;
+}
+.header .header_navbar .header_navlink_base{
+  text-decoration: none;
+  color: black;
+  height: fit-content;
+  width: fit-content;
+  font-weight: bold;
+}
+.header .header_photo_profil img{
+  height: 40px;
+  width: 40px;
+}
