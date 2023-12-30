@@ -1,0 +1,12 @@
+.footer{
+  position: absolute;
+  background-color: #D38AFF;
+  border-top: 1px solid black;
+  width: 100vw;
+  height: fit-content;
+  padding: 2vh 2vh;
+  bottom: 0;
+}
+.footer p:first-child{
+  font-weight: bold;
+}

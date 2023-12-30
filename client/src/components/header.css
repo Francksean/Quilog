@@ -1,20 +1,26 @@
 .header{
-  background-color: aqua;
   height: fit-content;
   width: 100vw;
-  padding: 5px 20px;
+  padding: 20px 5vw;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
+.header .header_left_side{
+  height: fit-content;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+}
 
 .header .header_main_title{
-  font-size: 45px;
+  font-size: 35px;
 }
 
 .header .header_navbar{
-  background-color: antiquewhite;
   width: fit-content;
   height: fit-content;
   display: flex;
@@ -27,7 +33,36 @@
   color: black;
   height: fit-content;
   width: fit-content;
-  font-weight: bold;
+  padding: 0px 5px;
+  text-transform: uppercase;
+  position: relative;
+}
+.header .header_navbar .header_navlink_base::after{
+  content: " ";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  height: 100%;
+  width: 0%;
+  border-bottom: 2px solid black;
+  transition: 0.25s;
+}
+.header .header_navbar .header_navlink_base:hover::after{
+  width: 100%;
+}
+.header .header_navbar .header_navlink_active{
+  position: relative;
+  height: fit-content;
+  width: fit-content;
+}
+.header .header_navbar .header_navlink_active::after{
+  content: " ";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  height: 100%;
+  width: 100%;
+  border-bottom: 2px solid black;
 }
 .header .header_photo_profil img{
   height: 40px;
