@@ -6,6 +6,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 5vh;
 }
 .header .header_left{
   width: fit-content;
@@ -16,6 +17,10 @@
   justify-content: start;
   column-gap: 1vw;
 }
+.header .header_left p{
+  font-size: 24px;
+  font-weight: 600;
+}
 .header .header_infos{
   height: fit-content;
   width: fit-content;
@@ -25,3 +30,10 @@
   justify-content: end;
   column-gap: 1vw;
 }
+
+/* @media screen and (min-height:1000px) {
+  .header{
+    margin-bottom: 0;
+  }
+  
+} */

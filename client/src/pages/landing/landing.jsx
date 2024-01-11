@@ -20,11 +20,11 @@ function Landing() {
           <div className="landing_buttons">
             <Link to={"/"}  className='landing_button_item'>
               <img src={plus_btn} alt="" />
-              <p>Create Blog</p>
+              <p>Create Article</p>
             </Link>
             <Link to={"/"} className='landing_button_item' >
               <img src={view_btn} alt="" />
-              <p>Read Blog</p>
+              <p>Read Article</p>
             </Link>
           </div>
           <img src={main_img} alt="" />
