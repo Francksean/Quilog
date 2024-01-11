@@ -1,0 +1,22 @@
+import React from 'react'
+import './header.css'
+
+import header_icon from '../../assets/header_icon.png'
+import user_icon from '../../assets/mdi_user.png'
+
+function Header() {
+  return (
+    <div className='header'>
+      <div className="header_left">
+        <img src={header_icon} alt="icon_header"/>
+        <p>Quilog</p>
+      </div>
+      <div className="header_infos">
+        <p>Hey, Niraj</p>
+        <img src={user_icon} alt="user_icon" />
+      </div>
+    </div>
+  )
+}
+
+export default Header
