@@ -18,8 +18,8 @@ function Auth({ login, username, email, password }) {
   // const passwordField = useRef(null)
   // const emailField = useRef(null)
 
-  const handleChange = (func)=>{
-    e.preventDefault()
+  function handleChange(e,func){
+    console.log(e.target.value)
     func(e.target.value)
   }
 
@@ -43,15 +43,25 @@ function Auth({ login, username, email, password }) {
             
             <div className="form_wrapper_bottom">
               <form action="" method="post">
-                  <input type="text" name='username' placeholder='Enter your username' value={usernameValue} />
-                  <input type="password" name="password" id="p1" placeholder='Enter your Password' value={passwordValue} />
+                  <input type="text" name='username' placeholder='Enter your username' value={usernameValue} onChange={(e)=>handleChange(e,setUsernameValue)} />
                   {
-                    email ? <input type="email" name="email" id="em1" placeholder='Enter your email' value={emailValue}/>:null
+                    email ? <input type="email" name="email" id="em1" placeholder='Enter your email' value={emailValue} onChange={(e)=>handleChange(e,setEmailValue)}/>:null
                   }
+                  <input type="password" name="password" id="p1" placeholder='Enter your Password' value={passwordValue} onChange={(e)=>handleChange(e,setPasswordValue)}/>
               </form>
               <div className="sub_signit">
-                <button>Login</button>
-                <p>Don't have an account ?<span><Link to={"/auth/signup"}> Sign up</Link></span> </p>
+                {
+                  login ?
+                  <>
+                    <button>Login</button>
+                    <p>Don't have an account ?<span><Link to={"/auth/signup"}> Sign up</Link></span></p>
+                  </>:
+                  <>
+                    <button>Create your account</button>
+                    <p>Already have account ? <span><Link to={"/auth/login"}>Login</Link></span></p>
+                  </>
+                }
+                
               </div>
             </div>
         </div>

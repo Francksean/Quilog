@@ -10,7 +10,8 @@ function App() {
     <div  className="App">
       <Routes>
         <Route path="/" element={<Landing/>}/>
-        <Route path="/auth/login" element={<Auth login={true} username={true} email={true} password={true}/>}/>
+        <Route path="/auth/login" element={<Auth login={true} username={true} email={false} password={true}/>}/>
+        <Route path="/auth/signup" element={<Auth login={false} username={true} email={true} password={true}/>}/>
       </Routes>
     </div>
   )

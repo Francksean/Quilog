@@ -17,6 +17,10 @@
   justify-content: start;
   column-gap: 1vw;
 }
+.header .header_left a{
+  text-decoration: none;
+  color: black;
+}
 .header .header_left p{
   font-size: 24px;
   font-weight: 600;
@@ -31,9 +35,9 @@
   column-gap: 1vw;
 }
 
-/* @media screen and (min-height:1000px) {
+@media screen and (max-height:700px) {
   .header{
     margin-bottom: 0;
   }
   
-} */
+}

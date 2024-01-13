@@ -11,7 +11,9 @@ function Header() {
     <div className='header'>
       <div className="header_left">
         <img src={header_icon} alt="icon_header"/>
-        <p>Quilog</p>
+        <Link to={'/'}>
+          <p>Quilog</p>
+        </Link>
       </div>
       <div className="header_infos">
         <Link to={"/auth/login"} >Login</Link>
