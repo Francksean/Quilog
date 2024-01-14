@@ -9,7 +9,7 @@ app.use(express.json())
 app.use(cors())
 
 mongoose.connect(
-    "mongodb+srv://seandjissou:o89feD7mkoHgi8cL@quilogcluster.ivatx2e.mongodb.net/"
+    "mongodb+srv://seandjissou:g9LlX2IeLGIaPbEF@quilogcluster.ivatx2e.mongodb.net/?retryWrites=true&w=majority"
 )
 
 
