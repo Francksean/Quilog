@@ -11,29 +11,28 @@ const router = express.Router();
 router.post("/register", async (req, res) => {
     const { username, email, password } = req.body;
     const user = await UserModel.findOne({ username })
-    const mail = await UserModel.findOne({ mail })
+    const mail = await UserModel.findOne({ email })
 
 
     if(user){
         res.json( { message : "Username already exist"})
-    }
-    if(mail){
+    }else if(mail){
         res.json( { message : "Email address already exist"})
+    }else{
+        const hashPassword = await bcrypt.hash(password, 15)
+    
+        const newUser = new UserModel({
+            username,
+            password : hashPassword,
+            email,
+            articles : [],
+            profilePic : undefined,
+        })
+    
+        newUser.save()
+    
+        res.json( { message : "User registerd successfully !" })
     }
-
-    const hashPassword = bcrypt.hash(password, 15)
-
-    const newUser = new UserModel({
-        username,
-        password : hashPassword,
-        email,
-        articles : [],
-        profilePic : undefined,
-    })
-
-    newUser.save()
-
-    res.json( { message : "User registerd successfully !" })
 })
 
 router.post("/login", async (req, res) => {
