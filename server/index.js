@@ -14,10 +14,10 @@ app.use("/auth", userRouter)
 app.use("/content", articlesRouter)
 
 mongoose.connect(
-    "mongodb+srv://seandjissou:g9LlX2IeLGIaPbEF@quilogcluster.ivatx2e.mongodb.net/?retryWrites=true&w=majority"
+    "mongodb+srv://seandjissou:g9LlX2IeLGIaPbEF@quilogcluster.ivatx2e.mongodb.net/Quilog?retryWrites=true&w=majority"
 )
 
 
-app.listen(3001,()=>{
-    console.log("\n\n\n\n\n\n\nServer started on port 3001")
+app.listen(3000,()=>{
+    console.log("\n\n\n\n\n\n\nServer started on port 3000")
 })

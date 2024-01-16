@@ -12,4 +12,4 @@ const ArticlesSchema = mongoose.Schema({
     }]
 });
 
-export const ArticlesModel = mongoose.model("Articles", ArticlesSchema);
+export const ArticlesModel = mongoose.model("articles", ArticlesSchema);
