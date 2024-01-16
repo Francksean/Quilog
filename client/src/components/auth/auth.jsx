@@ -3,7 +3,7 @@ import Header from '../header/header';
 import { Link } from 'react-router-dom';
 import './auth.css';
 import axios from 'axios'
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import main_img from '../../assets/main_landing_image.png';
 
@@ -28,8 +28,9 @@ export default Auth;
 function Login() {
   const [usernameValue, setUsernameValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
-  const [loginSuccess, setLoginSuccess] = useState(false)
-  
+
+  const navigate = useNavigate()
+
   function handleChange(e, func) {
     //console.log(e.target.value);
     func(e.target.value);
@@ -45,6 +46,7 @@ function Login() {
       if (res.data) {
         alert(res.data.message);
         setLoginSuccess(true);
+        Navigate("/")
       } else {
         alert("Erreur lors de la connexion au compte, veuillez réessayer");
       }
@@ -52,10 +54,6 @@ function Login() {
       console.error("Une erreur s'est produite :", error.message);
       alert("Une erreur s'est produite lors de la connexion, veuillez réessayer");
     }
-  }
-
-  if (loginSuccess) {
-    return <Navigate to="/home" />;
   }
 
 
@@ -105,8 +103,8 @@ function Signup (){
   const [usernameValue, setUsernameValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
-  const [registerSuccess, setRegisterSuccess] = useState(false)
 
+  const navigate = useNavigate()
   
   function handleChange(e, func) {
     //console.log(e.target.value);
@@ -122,9 +120,9 @@ function Signup (){
       });
   
       if (res.data) {
-        alert(res.data.message);
+        alert(res.data.message + " now login !");
         //console.log(res.data)
-        setRegisterSuccess(true);
+        Navigate("/auth/login")
 
       } else {
         alert("Erreur lors de la création du compte, veuillez réessayer");
@@ -135,10 +133,6 @@ function Signup (){
     }
   }
 
-  if (registerSuccess) {
-    return <Navigate to="/auth/login" />;
-  }
-  
 
   return(
     <div className="auth_body">
