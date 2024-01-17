@@ -122,7 +122,7 @@ function Signup (){
       if (res.data) {
         alert(res.data.message + " now login !");
         //console.log(res.data)
-        Navigate("/auth/login")
+        navigate("/auth/login")
 
       } else {
         alert("Erreur lors de la création du compte, veuillez réessayer");
