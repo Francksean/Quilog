@@ -46,7 +46,7 @@ function Login() {
       if (res.data) {
         alert(res.data.message);
         setLoginSuccess(true);
-        Navigate("/")
+        navigate("/")
       } else {
         alert("Erreur lors de la connexion au compte, veuillez réessayer");
       }
@@ -109,6 +109,18 @@ function Signup (){
   function handleChange(e, func) {
     //console.log(e.target.value);
     func(e.target.value);
+  }
+
+  function contentVar(valuesArray){
+    let isAFieldNull = false;
+    valuesArray.map((item)=>{
+      if(item == null){
+        isAFieldNull = true;
+      }
+    })
+    if(isAFieldNull == true){
+      alert("Tous les champs doivent être remplis")
+    }
   }
 
   async function sendDatas(usrnameParam, emailParam, passwordParam) {
