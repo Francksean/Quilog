@@ -14,7 +14,7 @@ app.use("/auth", userRouter)
 app.use("/content", articlesRouter)
 
 mongoose.connect(
-    "mongodb+srv://seandjissou:g9LlX2IeLGIaPbEF@quilogcluster.ivatx2e.mongodb.net/Quilog?retryWrites=true&w=majority"
+    "mongodb+srv://seandjissou:adminquilog@quilogcluster.ivatx2e.mongodb.net/Quilog?retryWrites=true&w=majority"
 )
 
 
