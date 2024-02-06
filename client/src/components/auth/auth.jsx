@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import Header from '../header/header';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import './auth.css';
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom';
+import { useUser } from '../context/userDatasContext';
+
 
 import main_img from '../../assets/main_landing_image.png';
 
@@ -26,29 +27,18 @@ function Auth({ isLoginComponent }) {
 export default Auth;
 
 
-
-
-
-
-
-
-
-
-
-
-
 function Login() {
   const [usernameValue, setUsernameValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
+  const { isUserLoggedIn, setIsUserLoggedIn } = useUser();
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
 
   function handleChange(e, func) {
-    //console.log(e.target.value);
     func(e.target.value);
   }
 
-  async function getDatas(usrnameParam, passwordParam) {
+  const getDatas = async (usrnameParam, passwordParam) => {
     try {
       const res = await axios.post("http://localhost:3000/auth/login", {
         username: usrnameParam,
@@ -57,8 +47,13 @@ function Login() {
 
       if (res.data) {
         alert(res.data.message);
-        setLoginSuccess(true);
-        navigate("/")
+        localStorage.setItem("userId", res.data.userId)
+        localStorage.setItem("token", res.data.token)
+        console.log("Before setIsUserLoggedIn(true):", isUserLoggedIn);
+        setIsUserLoggedIn(true);
+        console.log("After setIsUserLoggedIn(true):", isUserLoggedIn);
+        navigate("/");
+        location.reload();
       } else {
         alert("Erreur lors de la connexion au compte, veuillez réessayer");
       }
@@ -96,7 +91,8 @@ function Login() {
             />
           </form>
           <div className="sub_signit">
-            <button onClick={()=>{ getDatas(usernameValue, passwordValue) }}>Login</button>
+            <button onClick={()=>{ 
+              getDatas(usernameValue, passwordValue)}}>Login</button>
             <p>
               Don't have an account ?<span><Link to={"/auth/signup"}> Sign up</Link></span>
             </p>
@@ -123,17 +119,17 @@ function Signup (){
     func(e.target.value);
   }
 
-  function contentVar(valuesArray){
-    let isAFieldNull = false;
-    valuesArray.map((item)=>{
-      if(item == null){
-        isAFieldNull = true;
-      }
-    })
-    if(isAFieldNull == true){
-      alert("Tous les champs doivent être remplis")
-    }
-  }
+  // function contentVar(valuesArray){
+  //   let isAFieldNull = false;
+  //   valuesArray.map((item)=>{
+  //     if(item == null){
+  //       isAFieldNull = true;
+  //     }
+  //   })
+  //   if(isAFieldNull == true){
+  //     alert("Tous les champs doivent être remplis")
+  //   }
+  // }
 
   async function sendDatas(usrnameParam, emailParam, passwordParam) {
     try {

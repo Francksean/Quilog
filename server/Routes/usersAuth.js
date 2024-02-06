@@ -46,14 +46,6 @@ router.post("/login", async (req, res) => {
 });
 
 
-router.post("/infos/users", async(req, res) => {
-    const { userId } = req.body;
-    const user = await UserModel.findOne({ userId });
-    console.log(user)
-    if(user){
-        // console.log("okokokokokokok")
-        res.json({ user })
-    }
-})
 
-export { router as userRouter };
+
+export { router as userAuthRouter };
