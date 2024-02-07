@@ -7,7 +7,7 @@ const SocialsLinkSchema = new mongoose.Schema({
 
 const UserSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
-    userDescription : { type: Text },
+    userDescription : { type: String },
     password: { type: String, required: true },
     socials: [ SocialsLinkSchema ],
     email: { type: String, required: true },

@@ -8,6 +8,7 @@ export const useUser = () => useContext(UserContext);
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [ isUserDatasUpdated, setIsUserDatasUpdated ] = useState(false)
 
   useEffect(() => {
     async function fetchUserData() {
@@ -16,14 +17,15 @@ export const UserProvider = ({ children }) => {
         if (userId) {
           const res = await axios.post("http://localhost:3000/infos/users", { userId: userId });
           setUser(res.data.user);
-          setIsUserLoggedIn(true);
+          setIsUserLoggedIn(false);
+          setIsUserDatasUpdated(false)
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     }
     fetchUserData();
-  }, []);
+  }, [ isUserLoggedIn, isUserDatasUpdated ]);
 
   return (
     <UserContext.Provider value={{ user, isUserLoggedIn, setUser, setIsUserLoggedIn }}>

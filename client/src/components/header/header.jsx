@@ -38,7 +38,7 @@ function HeaderForUserIn() {
         <Link to={`/user/${user._id}`}>
           <img src={user_icon} alt="user_icon" />
         </Link>        
-        <Link to={"/auth/login"}
+        <Link to={"/"}
           onClick={()=>{
             setUser(undefined),
             localStorage.removeItem("userId", "token")

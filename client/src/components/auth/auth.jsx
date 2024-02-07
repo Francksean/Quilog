@@ -47,13 +47,15 @@ function Login() {
 
       if (res.data) {
         alert(res.data.message);
-        localStorage.setItem("userId", res.data.userId)
-        localStorage.setItem("token", res.data.token)
-        console.log("Before setIsUserLoggedIn(true):", isUserLoggedIn);
-        setIsUserLoggedIn(true);
-        console.log("After setIsUserLoggedIn(true):", isUserLoggedIn);
-        navigate("/");
-        location.reload();
+        if(res.data.message == "You logged in successfully!"){
+          localStorage.setItem("userId", res.data.userId)
+          localStorage.setItem("token", res.data.token)
+          // console.log("Before setIsUserLoggedIn(true):", isUserLoggedIn);
+          setIsUserLoggedIn(true);
+          // console.log("After setIsUserLoggedIn(true):", isUserLoggedIn);
+          navigate("/");
+          location.reload();
+        }
       } else {
         alert("Erreur lors de la connexion au compte, veuillez réessayer");
       }

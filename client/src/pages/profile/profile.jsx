@@ -1,0 +1,42 @@
+import React, { useEffect } from 'react'
+import './profile.css'
+
+import Header from '../../components/header/header'
+import { useUser } from '../../components/context/userDatasContext'
+import { Link } from 'react-router-dom'
+
+
+
+function Profile() {
+  const { user, isUserDatasUpdated, setIsUserDatasUpdated } = useUser() 
+
+  console.log("user.profilePic:", user.profilePic);
+
+  
+  return (
+    <div className='profile'>
+      <Header/>
+      <div className="profile_large_container">
+        <div className="profile_container">
+          <Link to={`/user/${user._id}/editer`}>Edit</Link>
+          <div className="profile_container_user_infos_main">
+            { user.profilePic == "" ? <div className="profile_pic profile_pic_uploader">Upload an image</div> : <div className='profile_pic' style={{backgroundImage:`url(${user.profilePic})`}}></div> }
+            <div className="profile_container_user_infos_main_right">
+              <h1>{user.username}</h1>
+              { user.userDescription != "" ? <p className="no_user_description">You have no description yet</p> : <p className="user_description">{ user.userDescription }</p> }
+              <p>{`articles posted : ${user.articles.length}`}</p>
+              <p>{`followers : ${user.followers.length}`}</p>
+              <p>{`followed : ${user.followed.length}`}</p>
+              <p>{`liked articles : ${user.likedArticles.length}`}</p>
+            </div>
+          </div>
+          <div className="profile_container_user_infos_socials">
+            {/* mettre en place la publication des réseau sociaux */}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default Profile
