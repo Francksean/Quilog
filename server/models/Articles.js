@@ -11,6 +11,7 @@ const ArticlesSchema = mongoose.Schema({
     content: { type: String, required: true },
     views: { type: Number, default: 0 },
     like: { type: Number, default: 0 }, 
+    shared: { type: Number, default: 0},
     comments: [ CommentSchema ]
 });
 

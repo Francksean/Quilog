@@ -13,7 +13,9 @@ const UserSchema = new mongoose.Schema({
     email: { type: String, required: true },
     profilePic: { type: String },
     articles: [{ type: Schema.Types.ObjectId, ref: "articles" }], 
-    likedArticles: [{ type: Schema.Types.ObjectId, ref: "articles" }]
+    likedArticles: [{ type: Schema.Types.ObjectId, ref: "articles" }],
+    followed: [{ type: Schema.Types.ObjectId, ref: "user" }],
+    followers: [{ type: Schema.Types.ObjectId, ref: "user" }]
 });
 
 export const UserModel = mongoose.model('user', UserSchema);
