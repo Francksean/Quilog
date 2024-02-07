@@ -13,6 +13,7 @@ function App() {
         <Route path="/home" element={<Landing/>}/>
         <Route path="/auth/login" element={<Auth isLoginComponent={true}/>}/>
         <Route path="/auth/signup" element={<Auth isLoginComponent={false}/>}/>
+        {/* <Route path="/user/:id" element={}/> */}
       </Routes>
     </div>
   )

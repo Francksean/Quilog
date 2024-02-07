@@ -35,10 +35,13 @@ function HeaderForUserIn() {
       </div>
       <div className="header_infos">
         <p>{` Welcome, ${user.username}`}</p>
-        <img src={user_icon} alt="user_icon" />
+        <Link to={`/user/${user._id}`}>
+          <img src={user_icon} alt="user_icon" />
+        </Link>        
         <Link to={"/auth/login"}
           onClick={()=>{
-            setUser(undefined)
+            setUser(undefined),
+            localStorage.removeItem("userId", "token")
         }}>Logout</Link>
       </div>
     </div>
