@@ -64,7 +64,7 @@ function ProfileEditerField({ fieldName, fieldDefaultValue}) {
     }
 
     if(fieldValue != fieldDefaultValue ){
-      const res = await axios.post("http://localhost:3000/infos/users/update/fields", { userId: user._id, updatedValue:fieldValue, field:fieldGettingChanges})
+      const res = await axios.post("https://quilog-server.vercel.app/infos/users/update/fields", { userId: user._id, updatedValue:fieldValue, field:fieldGettingChanges})
       if(res.data.message == "datas updated correctly" ){
         alert(res.data.message)
       }else{
