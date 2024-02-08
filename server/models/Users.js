@@ -7,11 +7,11 @@ const SocialsLinkSchema = new mongoose.Schema({
 
 const UserSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
-    userDescription : { type: String },
+    userDescription : { type: String, default:"" },
     password: { type: String, required: true },
     socials: [ SocialsLinkSchema ],
     email: { type: String, required: true },
-    profilePic: { type: String },
+    profilePic: { type: String, default:"" },
     articles: [{ type: Schema.Types.ObjectId, ref: "articles" }], 
     likedArticles: [{ type: Schema.Types.ObjectId, ref: "articles" }],
     followed: [{ type: Schema.Types.ObjectId, ref: "user" }],

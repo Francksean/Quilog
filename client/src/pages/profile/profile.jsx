@@ -9,9 +9,6 @@ import { Link } from 'react-router-dom'
 
 function Profile() {
   const { user, isUserDatasUpdated, setIsUserDatasUpdated } = useUser() 
-
-  console.log("user.profilePic:", user.profilePic);
-
   
   return (
     <div className='profile'>
@@ -23,11 +20,13 @@ function Profile() {
             { user.profilePic == "" ? <div className="profile_pic profile_pic_uploader">Upload an image</div> : <div className='profile_pic' style={{backgroundImage:`url(${user.profilePic})`}}></div> }
             <div className="profile_container_user_infos_main_right">
               <h1>{user.username}</h1>
-              { user.userDescription != "" ? <p className="no_user_description">You have no description yet</p> : <p className="user_description">{ user.userDescription }</p> }
-              <p>{`articles posted : ${user.articles.length}`}</p>
-              <p>{`followers : ${user.followers.length}`}</p>
-              <p>{`followed : ${user.followed.length}`}</p>
-              <p>{`liked articles : ${user.likedArticles.length}`}</p>
+              { user.userDescription =="" ? <p className="no_user_description">You have no description yet</p> : <p className="user_description">{ user.userDescription }</p> }
+              <div className="stats_box">
+                <p className='stat stat1'>{`articles posted : ${user.articles.length}`}</p>
+                <p className='stat stat2'>{`followers : ${user.followers.length}`}</p>
+                <p className='stat stat3'>{`followed : ${user.followed.length}`}</p>
+                <p className='stat stat4'>{`liked articles : ${user.likedArticles.length}`}</p>
+              </div>
             </div>
           </div>
           <div className="profile_container_user_infos_socials">
