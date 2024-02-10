@@ -4,6 +4,7 @@ import Landing from "./pages/landing/landing"
 import Auth from "./components/auth/auth"
 import Profile from "./pages/profile/profile"
 import ProfileEditer from "./pages/profile/profileEditer"
+import ArticleWriter from "./pages/articles/articleWriter"
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/auth/signup" element={<Auth isLoginComponent={false}/>}/>
         <Route path="/user/:id" element={<Profile/>}/>
         <Route path="/user/:id/editer" element={<ProfileEditer/>}/>
+        <Route path="/create/article" element={<ArticleWriter/>}/>
       </Routes>
     </div>
   )
