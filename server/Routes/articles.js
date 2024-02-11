@@ -43,7 +43,7 @@ router.post("/delete", async(req, res) =>{
   }
 })
 
-router.get("/fetchFeed", async(req, res)=>{
+router.get("/Feed", async(req, res)=>{
   const articles = await ArticleModel.find({})
   res.json({articles})
 })
