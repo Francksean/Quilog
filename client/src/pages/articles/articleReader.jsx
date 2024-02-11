@@ -6,8 +6,7 @@ import Header from '../../components/header/header'
 function ArticleReader() {
   const FeedArticles = []
   useEffect(()=>{
-    const fetchFeed = async()=>{
-    }
+    const fetchFeed = async()=>{"https://quilog-server.vercel.app/content/feed"}
   }, [])
   return (
     <div className='article_reader'>
