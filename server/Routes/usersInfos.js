@@ -31,12 +31,25 @@ router.post("/users/update/arrays", async(req, res) => {
   )
 })
 
+router.post("/users/briefInfos", async(req, res) => {
+  const { userId } = req.body;
+  const userBrief = await UserModel.findOne(
+    { "_id":userId },
+    { profilePic: 1, username: 1}
+  );
+  if(userBrief){
+    res.send({ profilePic : userBrief.profilePic, username: userBrief.username })
+  }
+})
+
 router.post("/users", async(req, res) => {
   const { userId } = req.body;
   const user = await UserModel.findOne({ "_id":userId });
   if(user){
-      res.json({ user })
+    res.json({ user })
   }
 })
+
+
 
 export { router as userInfosRouter };

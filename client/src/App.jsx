@@ -5,6 +5,7 @@ import Auth from "./components/auth/auth"
 import Profile from "./pages/profile/profile"
 import ProfileEditer from "./pages/profile/profileEditer"
 import ArticleWriter from "./pages/articles/articleWriter"
+import ArticleReader from "./pages/articles/articleReader"
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/user/:id" element={<Profile/>}/>
         <Route path="/user/:id/editer" element={<ProfileEditer/>}/>
         <Route path="/create/article" element={<ArticleWriter/>}/>
+        <Route path="/read/articles" element={<ArticleReader/>}/>
       </Routes>
     </div>
   )
