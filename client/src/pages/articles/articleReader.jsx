@@ -57,7 +57,7 @@ function FeedItem({ articleAuthor, articleTitle, articleContent, datePosted, art
   const [ authorName, setAuthorName ] = useState("")
   useEffect(()=>{
     const fetchAuthorBrief = async () => {
-      const briefFetched = await axios.get("https://quilog-server.vercel.app/infos/users/userBrief", { userId: articleAuthor })
+      const briefFetched = await axios.post("https://quilog-server.vercel.app/infos/users/userBrief", { userId: articleAuthor })
       setAuthorPic( briefFetched.data.profilePic )
       setAuthorName( briefFetched.data.username)
     }
