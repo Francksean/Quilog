@@ -10,21 +10,30 @@ import shareIcon from '../../assets/material-symbols_share.png'
 
 function ArticleReader() {
   const [feedArticles, setFeedArticles] = useState([])
+  const [ isFeedBeenFetched, setIsFeedBeenFetched ] = useState(false)
 
   useEffect(()=>{
     const fetchFeed = async()=>{
-      axios.get("https://quilog-server.vercel.app/content/feed")
+      const feed = await axios.get("https://quilog-server.vercel.app/content/feed")
+      setFeedArticles(feed.data.articles)
     }
     fetchFeed()
-    setFeedArticles(Array.from(fetchFeed))
   }, [])
+  
+  useEffect(() => {
+    setIsFeedBeenFetched(true)
+    console.log("feed fetched ok ok")
+  }, [feedArticles]);
+  
   return (
     <div className='article_reader'>
       <Header/>
       <div className="article_reader_body">
         <h1>Feed</h1>
-        { feedArticles.map((feedItem)=>{
+        <div className='feed_items_container'>
+        {isFeedBeenFetched ? feedArticles.map((feedItem) => (
           <FeedItem 
+            key={feedItem._id}
             articleAuthor={feedItem.author} 
             articleTitle={feedItem.title} 
             articleContent={feedItem.content}
@@ -32,8 +41,10 @@ function ArticleReader() {
             articleLikes={feedItem.like}
             articleComments={feedItem.comments}
             articleViews={feedItem.views}
-            articleShared={feedItem.shared}/>
-        })}
+            articleShared={feedItem.shared}
+          />
+        )) : null }
+        </div>
       </div>
     </div>
   )
@@ -51,6 +62,7 @@ function FeedItem({ articleAuthor, articleTitle, articleContent, datePosted, art
       setAuthorName( briefFetched.data.username)
     }
     fetchAuthorBrief()
+    console.log("feed_item_breif ok ok")
   }, [])
   return (
     <div className='feed_item'>
@@ -65,7 +77,7 @@ function FeedItem({ articleAuthor, articleTitle, articleContent, datePosted, art
         <p>{articleContent}</p>
         <div className="feed_item_stats_box">
           <div className="feed_item_stats_box_item">
-            <button>Viewq</button>
+            <p>views</p>
             <p>{articleViews}</p>
           </div>
           <div className="feed_item_stats_box_item">
