@@ -43,7 +43,7 @@ router.post("/delete", async(req, res) =>{
   }
 })
 
-router.post("/feed", async(req, res)=>{
+router.get("/feed", async(req, res)=>{
   const articles = await ArticleModel.find({})
   res.json({articles})
 })
