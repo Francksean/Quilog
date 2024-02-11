@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './articleWriter.css'
 import Header from "../../components/header/header"
 import { useUser } from '../../components/context/userDatasContext'
+import axios from 'axios'
 
 function ArticleWriter() {
   const [ articleTitle, setArticleTitle ] = useState("")
@@ -13,6 +14,18 @@ function ArticleWriter() {
   }
   const clearer = () => {
     setArticleText("")
+  }
+
+  const submitter = async() =>{
+    const res = await axios.post("https://quilog-server.vercel.app/content/submit", 
+    {
+      author : user._id,
+      title : articleTitle,
+      content : articleText
+    })
+    if(res){
+      alert(res.message)
+    }
   }
 
   return (
@@ -29,8 +42,8 @@ function ArticleWriter() {
           <p>{`By ${user.username} on ${new Date().toDateString()}`}</p>
         </div>
         <div className="buttons_box">
-          <button onClick={()=>{clearer()}}>Clear all</button>
-          <button>Post your article</button>
+          <button onClick={()=> clearer()}>Clear all</button>
+          <button onClick={()=> submitter()}>Post your article</button>
         </div>
       </div>
     </div>

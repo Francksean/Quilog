@@ -22,7 +22,7 @@ router.post("/submit", async(req, res)=>{
       }
       )
     }
-    res.send({ message:" Submitted successfully !", aricle:newArticle})
+    res.send({ message:" article submitted successfully !", aricle:newArticle})
 })
 
 
@@ -41,6 +41,11 @@ router.post("/delete", async(req, res) =>{
   }else{
     res.send({message : "no article found "})
   }
+})
+
+router.get("/fetchFeed", async(req, res)=>{
+  const articles = await ArticleModel.find({})
+  res.json({articles})
 })
 
 
