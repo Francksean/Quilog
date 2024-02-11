@@ -12,8 +12,8 @@ const UserSchema = new mongoose.Schema({
     socials: [ SocialsLinkSchema ],
     email: { type: String, required: true },
     profilePic: { type: String, default:"" },
-    articles: [{ type: Schema.Types.ObjectId, ref: "articles" }], 
-    likedArticles: [{ type: Schema.Types.ObjectId, ref: "articles" }],
+    articles: [{ type: Schema.Types.ObjectId, ref: "article" }], 
+    likedArticles: [{ type: Schema.Types.ObjectId, ref: "article" }],
     followed: [{ type: Schema.Types.ObjectId, ref: "user" }],
     followers: [{ type: Schema.Types.ObjectId, ref: "user" }]
 });
