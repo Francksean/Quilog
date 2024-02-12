@@ -59,7 +59,7 @@ function LandingForUserOut() {
         <p className='landing_main_text'>"The secret to getting ahead is gettting started."</p>
         <div className="landing_bottom_main">
           <div className="landing_buttons">
-            <Link to={"/"} className='landing_button_item' >
+            <Link to={"/read/articles"} className='landing_button_item' >
               <img src={view_btn} alt="" />
               <p>Read Article</p>
             </Link>

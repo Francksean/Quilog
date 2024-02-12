@@ -106,8 +106,8 @@ function FeedItem({ articleAuthor, articleTitle, articleContent, datePosted, art
       <div className="comment_section_container comment_section_container_visible">
         <input type="text" placeholder='Write your comment here...' value={commentValue} onChange={(e)=>handleCommentChanges(e)} />
         <div className="written_comments">
-          {
-            articleComments.map((commentItem)=>{
+          { 
+            articleComments.length == 0 ? <p>No comment yet</p> : articleComments.map((commentItem)=>{
               
             })
           }
