@@ -15,7 +15,6 @@ import main_img from '../../assets/main_landing_image.png'
 
 function Landing() {
   const { user } = useUser()
-  { console.log(user) }
   return(
     <>
       { user ? <LandingForUserIn/> : <LandingForUserOut/> }
