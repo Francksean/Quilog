@@ -31,7 +31,7 @@ router.post("/users/update/arrays", async(req, res) => {
   )
 })
 
-router.post("/users/briefInfos", async(req, res) => {
+router.post("/users/userBrief", async(req, res) => {
   const { userId } = req.body;
   const userBrief = await UserModel.findOne(
     { "_id":userId },

@@ -55,11 +55,20 @@ export default ArticleReader
 function FeedItem({ articleAuthor, articleTitle, articleContent, datePosted, articleViews, articleLikes, articleComments, articleShared }) {
   const [ authorPic, setAuthorPic ] = useState("")
   const [ authorName, setAuthorName ] = useState("")
+  const [ commentValue, setCommentValue ] = useState("")
+
+  const datePostedConverted = new Date(datePosted).toUTCString()
+
+  const handleCommentChanges = (e)=>{
+    setCommentValue(e.target.value)
+  }
   useEffect(()=>{
     const fetchAuthorBrief = async () => {
-      const briefFetched = await axios.post("https://quilog-server.vercel.app/infos/users/userBrief", { userId: articleAuthor })
-      setAuthorPic( briefFetched.data.profilePic )
-      setAuthorName( briefFetched.data.username)
+      const briefFetched = await axios.post("http://localhost:3000/infos/users/userBrief", { userId: articleAuthor })
+      if(briefFetched){
+        setAuthorPic( briefFetched.data.profilePic )
+        setAuthorName( briefFetched.data.username)
+      }
     }
     fetchAuthorBrief()
     console.log("feed_item_breif ok ok")
@@ -67,14 +76,14 @@ function FeedItem({ articleAuthor, articleTitle, articleContent, datePosted, art
   return (
     <div className='feed_item'>
       <div className="feed_item_header">
-        <img src={authorPic} alt="" />
+        <div className='feed_item_header_pic' style={{backgroundImage:`url(${authorPic})`}}></div>
         <div className="feed_item_header_infos">
           <h2>{ articleTitle }</h2>
-          <p>{ authorName }</p>
+          <p>{ `By ${authorName}, posted on ${datePostedConverted}` }</p>
         </div>
       </div>
       <div className="feed_item_body">
-        <p>{articleContent}</p>
+        <p className='aricle_text'>{articleContent}</p>
         <div className="feed_item_stats_box">
           <div className="feed_item_stats_box_item">
             <p>views</p>
@@ -94,8 +103,15 @@ function FeedItem({ articleAuthor, articleTitle, articleContent, datePosted, art
           </div>
         </div>
       </div>
-      <div className="feed_item_footer">
-        <p>{`posted on ${datePosted}`}</p>
+      <div className="comment_section_container comment_section_container_visible">
+        <input type="text" placeholder='Write your comment here...' value={commentValue} onChange={(e)=>handleCommentChanges(e)} />
+        <div className="written_comments">
+          {
+            articleComments.map((commentItem)=>{
+              
+            })
+          }
+        </div>
       </div>
 
     </div>
