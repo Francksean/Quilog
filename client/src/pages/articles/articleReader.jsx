@@ -22,7 +22,6 @@ function ArticleReader() {
   
   useEffect(() => {
     setIsFeedBeenFetched(true)
-    console.log("feed fetched ok ok")
   }, [feedArticles]);
   
   return (
@@ -71,7 +70,6 @@ function FeedItem({ articleAuthor, articleTitle, articleContent, datePosted, art
       }
     }
     fetchAuthorBrief()
-    console.log("feed_item_breif ok ok")
   }, [])
   return (
     <div className='feed_item'>
