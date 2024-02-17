@@ -83,15 +83,19 @@ function FeedItem({ articleId, articleAuthor, articleTitle, articleContent, date
   }
 
   const commentSubmitter = async ()=>{
-    const res = await axios.post("https://quilog-server.vercel.app/content/postComment", {
-      articleId: articleId, 
-      content: commentValue,
-      authorId: localStorage.getItem("userId")
-    })
-    if(res){
-      alert(res.data.message)
+    if(commentValue != ""){
+      const res = await axios.post("https://quilog-server.vercel.app/content/postComment", {
+        articleId: articleId, 
+        content: commentValue,
+        authorId: localStorage.getItem("userId")
+      })
+      if(res){
+        alert(res.data.message)
+      }else{
+        alert("Error while posting the comment \n We're sorry ")
+      }
     }else{
-      alert("Error while posting the comment \n We're sorry ")
+      alert("votre commentaire est vide")
     }
   }
 
@@ -153,18 +157,12 @@ function CommentItemElement ({author, commentText, datePosted}) {
   const [ commentAuthorName, setCommentAuthorName ] = useState('')
   useEffect(() => {
     const fetchBrief = async () => {
-      console.log("Fetching author brief...");
       console.log(author)
-      try {
-        const res = await axios.post("https://quilog-server.vercel.app/users/userBrief", { userId: author });
-        console.log("Response received:", res);
-        if (res && res.data) {
-          console.log("Author data:", res.data);
-          setCommentAuthorName(res.data.username);
-          setCommentAuthorPic(res.data.profilePic);
-        }
-      } catch (error) {
-        console.error("Error fetching author brief:", error);
+      const res = await axios.post("https://quilog-server.vercel.app/users/userBrief", { userId: author });
+      if (res) {
+        console.log("Author data:", res.data);
+        setCommentAuthorName(res.data.username);
+        setCommentAuthorPic(res.data.profilePic);
       }
     };
   
