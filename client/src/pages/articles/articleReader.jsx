@@ -65,7 +65,7 @@ function FeedItem({ articleId, articleAuthor, articleTitle, articleContent, date
   }
   useEffect(()=>{
     const fetchAuthorBrief = async () => {
-      const briefFetched = await axios.post("http://localhost:3000/infos/users/userBrief", { userId: articleAuthor })
+      const briefFetched = await axios.post("https://quilog-server.vercel.app/infos/users/userBrief", { userId: articleAuthor })
       if(briefFetched){
         setAuthorPic( briefFetched.data.profilePic )
         setAuthorName( briefFetched.data.username)
@@ -83,7 +83,7 @@ function FeedItem({ articleId, articleAuthor, articleTitle, articleContent, date
   }
 
   const commentSubmitter = async ()=>{
-    const res = await axios.post("http://localhost:3000/content/postComment", {
+    const res = await axios.post("https://quilog-server.vercel.app/content/postComment", {
       articleId: articleId, 
       content: commentValue,
       authorId: localStorage.getItem("userId")
@@ -156,7 +156,7 @@ function CommentItemElement ({author, commentText, datePosted}) {
       console.log("Fetching author brief...");
       console.log(author)
       try {
-        const res = await axios.post("http://localhost:3000/infos/users/userBrief", { userId: author });
+        const res = await axios.post("https://quilog-server.vercel.app/users/userBrief", { userId: author });
         console.log("Response received:", res);
         if (res && res.data) {
           console.log("Author data:", res.data);
