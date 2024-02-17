@@ -33,6 +33,7 @@ function ArticleReader() {
         {isFeedBeenFetched ? feedArticles.map((feedItem) => (
           <FeedItem 
             key={feedItem._id}
+            articleId={feedItem._id}
             articleAuthor={feedItem.author} 
             articleTitle={feedItem.title} 
             articleContent={feedItem.content}
@@ -51,10 +52,11 @@ function ArticleReader() {
 
 export default ArticleReader
 
-function FeedItem({ articleAuthor, articleTitle, articleContent, datePosted, articleViews, articleLikes, articleComments, articleShared }) {
+function FeedItem({ articleId, articleAuthor, articleTitle, articleContent, datePosted, articleViews, articleLikes, articleComments, articleShared }) {
   const [ authorPic, setAuthorPic ] = useState("")
   const [ authorName, setAuthorName ] = useState("")
   const [ commentValue, setCommentValue ] = useState("")
+  const [ isCommentSectionOpen, setIsCommentSectionOpen ] = useState(false)
 
   const datePostedConverted = new Date(datePosted).toUTCString()
 
@@ -71,6 +73,28 @@ function FeedItem({ articleAuthor, articleTitle, articleContent, datePosted, art
     }
     fetchAuthorBrief()
   }, [])
+
+  const commentSectionToggler = ()=>{
+    if(isCommentSectionOpen){
+      setIsCommentSectionOpen(false)
+    }else{
+      setIsCommentSectionOpen(true)
+    }
+  }
+
+  const commentSubmitter = async ()=>{
+    const res = await axios.post("http://localhost:3000/content/postComment", {
+      articleId: articleId, 
+      content: commentValue,
+      authorId: localStorage.getItem("userId")
+    })
+    if(res){
+      alert(res.data.message)
+    }else{
+      alert("Error while posting the comment \n We're sorry ")
+    }
+  }
+
   return (
     <div className='feed_item'>
       <div className="feed_item_header">
@@ -83,16 +107,16 @@ function FeedItem({ articleAuthor, articleTitle, articleContent, datePosted, art
       <div className="feed_item_body">
         <p className='aricle_text'>{articleContent}</p>
         <div className="feed_item_stats_box">
-          <div className="feed_item_stats_box_item">
+          {/* <div className="feed_item_stats_box_item">
             <p>views</p>
             <p>{articleViews}</p>
-          </div>
+          </div> */}
           <div className="feed_item_stats_box_item">
             <button><img src={likeIcon} alt=""/></button>
             <p>{articleLikes}</p>
           </div>
           <div className="feed_item_stats_box_item">
-            <button><img src={commentIcon} alt="" /></button>
+            <button onClick={()=>{commentSectionToggler()}}><img src={commentIcon} alt="" /></button>
             <p>{articleComments.length}</p>
           </div>
           <div className="feed_item_stats_box_item">
@@ -101,37 +125,52 @@ function FeedItem({ articleAuthor, articleTitle, articleContent, datePosted, art
           </div>
         </div>
       </div>
-      <div className="comment_section_container comment_section_container_visible">
-        <input type="text" placeholder='Write your comment here...' value={commentValue} onChange={(e)=>handleCommentChanges(e)} />
-        <div className="comment_container">
-        { 
-          articleComments.length === 0 ? <p>No comment yet</p> : 
-          articleComments.map((commentItem) => (
-            <CommentItemElement key={commentItem._id} author={commentItem._id} commentText={commentItem.commentContent} />
-          ))
-        }
+      {isCommentSectionOpen ? 
+        <div className="comment_section_container">
+          <div className="input_submitter">
+            <input type="text" placeholder='Write your comment here...' value={commentValue} onChange={(e)=>handleCommentChanges(e)} />
+            <button onClick={()=>{commentSubmitter()}}>send</button>
+          </div>
+          <div className="comment_container">
+          { 
+            articleComments.length === 0 ? <p>No comment yet</p> : 
+            articleComments.map((commentItem) => (
+              <CommentItemElement key={commentItem._id} author={commentItem.author} commentText={commentItem.commentContent} datePosted={commentItem.datePosted} />
+            ))
+          }
 
-        </div>
-      </div>
+          </div>
+        </div> : null
+      }
 
     </div>
   )
 }
 
 
-function CommentItemElement ({author, commentText}) {
+function CommentItemElement ({author, commentText, datePosted}) {
   const [ commentAuthorPic, setCommentAuthorPic ] = useState('')
   const [ commentAuthorName, setCommentAuthorName ] = useState('')
-  useEffect(()=>{
-    const fetchBrief = async()=>{
-      const res = await axios.post("http://localhost:3000/infos/users/userBrief", { userId : author  })
-      if(res){
-        console.log("ok")
+  useEffect(() => {
+    const fetchBrief = async () => {
+      console.log("Fetching author brief...");
+      console.log(author)
+      try {
+        const res = await axios.post("http://localhost:3000/infos/users/userBrief", { userId: author });
+        console.log("Response received:", res);
+        if (res && res.data) {
+          console.log("Author data:", res.data);
+          setCommentAuthorName(res.data.username);
+          setCommentAuthorPic(res.data.profilePic);
+        }
+      } catch (error) {
+        console.error("Error fetching author brief:", error);
       }
-    }
-    fetchBrief()
-
-  }, [])
+    };
+  
+    fetchBrief();
+  }, []);
+  
   return (
     <div className='comment_item'>
       <div className="comment_item_img">
@@ -139,7 +178,7 @@ function CommentItemElement ({author, commentText}) {
       </div>
       <div className="comment_body">
         <p>{commentAuthorName}</p>
-        <p>{commentText}</p>
+        <p>{ `${commentText} | on ${new Date(datePosted).toUTCString()}`}</p>
       </div>
     </div>
   )

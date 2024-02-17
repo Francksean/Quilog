@@ -48,6 +48,25 @@ router.get("/feed", async(req, res)=>{
   res.json({articles})
 })
 
+router.post("/postComment", async(req, res)=>{
+  const { articleId, content, authorId} = req.body
+  const addComment = await ArticleModel.updateOne(
+    {"_id": articleId},
+    {
+      $push: {
+        comments:{
+          author: authorId,
+          datePosted: new Date(),
+          commentContent: content
+        }
+      }
+    }
+  )
+  if(addComment){
+    res.send({ message: "comment posted successfully !"})
+  }
+})
+
 
 
 
