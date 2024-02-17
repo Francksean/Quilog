@@ -38,6 +38,7 @@ router.post("/users/userBrief", async(req, res) => {
     { profilePic: 1, username: 1}
   );
   if(userBrief){
+    console.log("userbrief arriving")
     res.send({ profilePic : userBrief.profilePic, username: userBrief.username })
   }
 })

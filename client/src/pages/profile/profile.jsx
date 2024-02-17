@@ -17,7 +17,7 @@ function Profile() {
         <div className="profile_container">
           <Link to={`/user/${user._id}/editer`}>Edit</Link>
           <div className="profile_container_user_infos_main">
-            { user.profilePic == "" ? <div className="profile_pic profile_pic_uploader">Upload an image</div> : <div className='profile_pic' style={{backgroundImage:`url(${user.profilePic})`}}></div> }
+            { user.profilePic == "" ? <div className="profile_pic profile_pic_uploader">Upload an image</div> : <div className='profile_pic'><img src={user.profilePic} alt="user profile pic" /></div> }
             <div className="profile_container_user_infos_main_right">
               <h1>{user.username}</h1>
               { user.userDescription =="" ? <p className="no_user_description">You have no description yet</p> : <p className="user_description">{ user.userDescription }</p> }

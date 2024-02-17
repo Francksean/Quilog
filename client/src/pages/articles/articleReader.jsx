@@ -103,15 +103,44 @@ function FeedItem({ articleAuthor, articleTitle, articleContent, datePosted, art
       </div>
       <div className="comment_section_container comment_section_container_visible">
         <input type="text" placeholder='Write your comment here...' value={commentValue} onChange={(e)=>handleCommentChanges(e)} />
-        <div className="written_comments">
-          { 
-            articleComments.length == 0 ? <p>No comment yet</p> : articleComments.map((commentItem)=>{
-              
-            })
-          }
+        <div className="comment_container">
+        { 
+          articleComments.length === 0 ? <p>No comment yet</p> : 
+          articleComments.map((commentItem) => (
+            <CommentItemElement key={commentItem._id} author={commentItem._id} commentText={commentItem.commentContent} />
+          ))
+        }
+
         </div>
       </div>
 
+    </div>
+  )
+}
+
+
+function CommentItemElement ({author, commentText}) {
+  const [ commentAuthorPic, setCommentAuthorPic ] = useState('')
+  const [ commentAuthorName, setCommentAuthorName ] = useState('')
+  useEffect(()=>{
+    const fetchBrief = async()=>{
+      const res = await axios.post("http://localhost:3000/infos/users/userBrief", { userId : author  })
+      if(res){
+        console.log("ok")
+      }
+    }
+    fetchBrief()
+
+  }, [])
+  return (
+    <div className='comment_item'>
+      <div className="comment_item_img">
+        <img src={commentAuthorPic} alt="" />
+      </div>
+      <div className="comment_body">
+        <p>{commentAuthorName}</p>
+        <p>{commentText}</p>
+      </div>
     </div>
   )
 }

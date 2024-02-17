@@ -17,14 +17,14 @@ function ArticleWriter() {
   }
 
   const submitter = async() =>{
-    const res = await axios.post("https://quilog-server.vercel.app/content/submit", 
+    const res = await axios.post("http://localhost:3000/content/submit", 
     {
-      author : user._id,
+      authorId : user._id,
       title : articleTitle,
       content : articleText
     })
     if(res){
-      alert(res.message)
+      alert(res.data.message)
     }
   }
 
@@ -34,10 +34,10 @@ function ArticleWriter() {
       <div className="article_writer_body">
         <div className="article_writer_body_container">
           <div className="article_input">
-            <input type="text" value={ articleTitle } id='title_article' placeholder="Your article's title" onChange={(e) => {handleInputChanges(e, setArticleTitle())}}/>                  
+            <input type="text" value={ articleTitle } id='title_article' placeholder="Your article's title" onChange={(e) => {handleInputChanges(e, setArticleTitle)}}/>                  
           </div>
           <div className="article_input">
-            <textarea name="article_body" id="article_body" value={ articleText } placeholder='Write your text...' onChange={(e) => {handleInputChanges(e, setArticleText())}}/>
+            <textarea name="article_body" id="article_body" value={ articleText } placeholder='Write your text...' onChange={(e) => {handleInputChanges(e, setArticleText)}}/>
           </div>
           <p>{`By ${user.username} on ${new Date().toDateString()}`}</p>
         </div>
