@@ -158,7 +158,7 @@ function CommentItemElement ({author, commentText, datePosted}) {
   useEffect(() => {
     const fetchBrief = async () => {
       console.log(author)
-      const res = await axios.post("https://quilog-server.vercel.app/users/userBrief", { userId: author });
+      const res = await axios.post("https://quilog-server.vercel.app/infos/users/userBrief", { userId: author });
       if (res) {
         console.log("Author data:", res.data);
         setCommentAuthorName(res.data.username);
