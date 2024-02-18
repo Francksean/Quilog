@@ -104,10 +104,13 @@ function FeedItem({ articleItem }) {
     }
   }
 
-  const likeHandler = ()=>{
+  const likeHandler = async()=>{
     if(likeIcon == likeIconBase){
       setLikeIcon(likeIconActive)
       setArticleLikes(articleLikes + 1)
+      const likeSender = await axios.post("http://localhost:3000/content/likeArticle",
+      { articleId: articleItem._id}
+      )
     }else{
       setLikeIcon(likeIconBase)
       setArticleLikes(articleLikes - 1)

@@ -106,6 +106,9 @@
   background-color: rgb(86, 115, 203);
   color: white;
 }
+.comment_section_container .input_submitter button:hover{
+  cursor: pointer;
+}
 .comment_container{
   display: flex;
   flex-direction: column;

@@ -67,6 +67,20 @@ router.post("/postComment", async(req, res)=>{
   }
 })
 
+router.post("/likeArticle", async(req, res)=>{
+  const { articleId } = req.body
+  const incLikes = await ArticleModel.updateOne(
+    {"_id": articleId },
+    {
+      $inc : { like : 1 }
+    }
+  )
+  if(incLikes){
+    console.log("ok ok")
+    res.send({ message : "like ok "})
+  }
+})
+
 
 
 
