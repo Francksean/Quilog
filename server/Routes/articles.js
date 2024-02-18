@@ -68,16 +68,30 @@ router.post("/postComment", async(req, res)=>{
 })
 
 router.post("/likeArticle", async(req, res)=>{
-  const { articleId } = req.body
+  const { articleId, userId, value } = req.body
   const incLikes = await ArticleModel.updateOne(
     {"_id": articleId },
     {
-      $inc : { like : 1 }
+      $inc : { like : value }
     }
   )
   if(incLikes){
-    console.log("ok ok")
-    res.send({ message : "like ok "})
+    res.send({ message : "like added "})
+  }
+  if(value > 0 ){
+    const addLikeToUSer = await UserModel.updateOne(
+      { "_id": userId },
+      {
+        $push: { likedArticles : articleId }
+      }
+    )
+  }else{
+    const removeLikeToUSer = await UserModel.updateOne(
+      { "_id": userId },
+      {
+        $pull: { likedArticles : articleId }
+      }
+    )
   }
 })
 

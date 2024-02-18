@@ -8,10 +8,7 @@ import { Link } from 'react-router-dom'
 
 
 function Profile() {
-  const { user, isUserDatasUpdated, setIsUserDatasUpdated } = useUser() 
-  useEffect(()=>{
-    console.log(`user is : ${user} `)
-  })  
+  const { user, isUserDatasUpdated, setIsUserDatasUpdated } = useUser()
   return (
     <div className='profile'>
       <Header/>

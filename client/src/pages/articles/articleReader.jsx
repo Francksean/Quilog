@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import './articleReader.css'
 import Header from '../../components/header/header'
 import axios from 'axios'
+import { useUser } from '../../components/context/userDatasContext'
+
 
 import commentIcon from '../../assets/iconamoon_comment-fill.png'
 import likeIconBase from '../../assets/like_button_off.png'
@@ -63,6 +65,8 @@ export default ArticleReader
 
 
 function FeedItem({ articleItem }) {
+  const{ user } = useUser()
+
   const [ authorPic, setAuthorPic ] = useState("")
   const [ authorName, setAuthorName ] = useState("")
   const [ commentValue, setCommentValue ] = useState("")
@@ -70,13 +74,17 @@ function FeedItem({ articleItem }) {
   const [ likeIcon, setLikeIcon ] = useState(likeIconBase)
   const [ articleLikes, setArticleLikes ] = useState(articleItem.like)
 
-
+  
+  
   const datePostedConverted = new Date(articleItem.datePosted).toUTCString()
-
+  
   const handleCommentChanges = (e)=>{
     setCommentValue(e.target.value)
   }
   useEffect(()=>{
+    if(user.likedArticles.includes(articleItem._id)){
+      setLikeIcon(likeIconActive)
+    }
     const fetchAuthorBrief = async () => {
       const briefFetched = await axios.post("https://quilog-server.vercel.app/infos/users/userBrief", { userId: articleItem.author })
       if(briefFetched){
@@ -100,11 +108,21 @@ function FeedItem({ articleItem }) {
       setLikeIcon(likeIconActive)
       setArticleLikes(articleLikes + 1)
       const likeSender = await axios.post("http://localhost:3000/content/likeArticle",
-      { articleId: articleItem._id}
+      { 
+        articleId: articleItem._id,
+        userId: localStorage.getItem("userId"),
+        value: 1
+      }
       )
     }else{
       setLikeIcon(likeIconBase)
       setArticleLikes(articleLikes - 1)
+      const likeSender = await axios.post("http://localhost:3000/content/likeArticle",
+      { 
+        articleId: articleItem._id,
+        userId: localStorage.getItem("userId"),
+        value: -1
+      })
     }
   }
 
