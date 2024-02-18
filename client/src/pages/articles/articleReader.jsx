@@ -35,15 +35,6 @@ function ArticleReader() {
           <FeedItem 
             key={feedItem._id}
             articleItem={feedItem}
-            // articleId={feedItem._id}
-            // articleAuthor={feedItem.author} 
-            // articleTitle={feedItem.title} 
-            // articleContent={feedItem.content}
-            // datePosted={feedItem.datePosted}
-            // articleLikes={feedItem.like}
-            // articleComments={feedItem.comments}
-            // articleViews={feedItem.views}
-            // articleShared={feedItem.shared}
           />
         )) : null }
         </div>
