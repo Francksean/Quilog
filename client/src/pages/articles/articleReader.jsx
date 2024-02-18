@@ -4,7 +4,8 @@ import Header from '../../components/header/header'
 import axios from 'axios'
 
 import commentIcon from '../../assets/iconamoon_comment-fill.png'
-import likeIcon from '../../assets/mdi_like-outline.png'
+import likeIconBase from '../../assets/like_button_off.png'
+import likeIconActive from '../../assets/like_button_active.png'
 import shareIcon from '../../assets/material-symbols_share.png'
 
 
@@ -33,15 +34,16 @@ function ArticleReader() {
         {isFeedBeenFetched ? feedArticles.map((feedItem) => (
           <FeedItem 
             key={feedItem._id}
-            articleId={feedItem._id}
-            articleAuthor={feedItem.author} 
-            articleTitle={feedItem.title} 
-            articleContent={feedItem.content}
-            datePosted={feedItem.datePosted}
-            articleLikes={feedItem.like}
-            articleComments={feedItem.comments}
-            articleViews={feedItem.views}
-            articleShared={feedItem.shared}
+            articleItem={feedItem}
+            // articleId={feedItem._id}
+            // articleAuthor={feedItem.author} 
+            // articleTitle={feedItem.title} 
+            // articleContent={feedItem.content}
+            // datePosted={feedItem.datePosted}
+            // articleLikes={feedItem.like}
+            // articleComments={feedItem.comments}
+            // articleViews={feedItem.views}
+            // articleShared={feedItem.shared}
           />
         )) : null }
         </div>
@@ -52,20 +54,40 @@ function ArticleReader() {
 
 export default ArticleReader
 
-function FeedItem({ articleId, articleAuthor, articleTitle, articleContent, datePosted, articleViews, articleLikes, articleComments, articleShared }) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function FeedItem({ articleItem }) {
   const [ authorPic, setAuthorPic ] = useState("")
   const [ authorName, setAuthorName ] = useState("")
   const [ commentValue, setCommentValue ] = useState("")
   const [ isCommentSectionOpen, setIsCommentSectionOpen ] = useState(false)
+  const [ likeIcon, setLikeIcon ] = useState(likeIconBase)
+  const [ articleLikes, setArticleLikes ] = useState(articleItem.like)
 
-  const datePostedConverted = new Date(datePosted).toUTCString()
+
+  const datePostedConverted = new Date(articleItem.datePosted).toUTCString()
 
   const handleCommentChanges = (e)=>{
     setCommentValue(e.target.value)
   }
   useEffect(()=>{
     const fetchAuthorBrief = async () => {
-      const briefFetched = await axios.post("https://quilog-server.vercel.app/infos/users/userBrief", { userId: articleAuthor })
+      const briefFetched = await axios.post("https://quilog-server.vercel.app/infos/users/userBrief", { userId: articleItem.author })
       if(briefFetched){
         setAuthorPic( briefFetched.data.profilePic )
         setAuthorName( briefFetched.data.username)
@@ -82,10 +104,20 @@ function FeedItem({ articleId, articleAuthor, articleTitle, articleContent, date
     }
   }
 
+  const likeHandler = ()=>{
+    if(likeIcon == likeIconBase){
+      setLikeIcon(likeIconActive)
+      setArticleLikes(articleLikes + 1)
+    }else{
+      setLikeIcon(likeIconBase)
+      setArticleLikes(articleLikes - 1)
+    }
+  }
+
   const commentSubmitter = async ()=>{
     if(commentValue != ""){
       const res = await axios.post("https://quilog-server.vercel.app/content/postComment", {
-        articleId: articleId, 
+        articleId: articleItem._id, 
         content: commentValue,
         authorId: localStorage.getItem("userId")
       })
@@ -97,6 +129,7 @@ function FeedItem({ articleId, articleAuthor, articleTitle, articleContent, date
     }else{
       alert("votre commentaire est vide")
     }
+    setCommentValue("")
   }
 
   return (
@@ -104,28 +137,28 @@ function FeedItem({ articleId, articleAuthor, articleTitle, articleContent, date
       <div className="feed_item_header">
         <div className='feed_item_header_pic' style={{backgroundImage:`url(${authorPic})`}}></div>
         <div className="feed_item_header_infos">
-          <h2>{ articleTitle }</h2>
+          <h2>{ articleItem.title }</h2>
           <p>{ `By ${authorName}, posted on ${datePostedConverted}` }</p>
         </div>
       </div>
       <div className="feed_item_body">
-        <p className='aricle_text'>{articleContent}</p>
+        <p className='aricle_text'>{articleItem.content}</p>
         <div className="feed_item_stats_box">
           {/* <div className="feed_item_stats_box_item">
             <p>views</p>
             <p>{articleViews}</p>
           </div> */}
           <div className="feed_item_stats_box_item">
-            <button><img src={likeIcon} alt=""/></button>
+            <button onClick={()=>{likeHandler()}}><img src={likeIcon} alt=""/></button>
             <p>{articleLikes}</p>
           </div>
           <div className="feed_item_stats_box_item">
             <button onClick={()=>{commentSectionToggler()}}><img src={commentIcon} alt="" /></button>
-            <p>{articleComments.length}</p>
+            <p>{articleItem.comments.length}</p>
           </div>
           <div className="feed_item_stats_box_item">
             <button><img src={shareIcon} alt="" /></button>
-            <p>{articleShared}</p>
+            <p>{articleItem.shared}</p>
           </div>
         </div>
       </div>
@@ -137,8 +170,8 @@ function FeedItem({ articleId, articleAuthor, articleTitle, articleContent, date
           </div>
           <div className="comment_container">
           { 
-            articleComments.length === 0 ? <p>No comment yet</p> : 
-            articleComments.map((commentItem) => (
+            articleItem.comments.length === 0 ? <p>No comment yet</p> : 
+            articleItem.comments.map((commentItem) => (
               <CommentItemElement key={commentItem._id} author={commentItem.author} commentText={commentItem.commentContent} datePosted={commentItem.datePosted} />
             ))
           }
@@ -152,15 +185,29 @@ function FeedItem({ articleId, articleAuthor, articleTitle, articleContent, date
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function CommentItemElement ({author, commentText, datePosted}) {
   const [ commentAuthorPic, setCommentAuthorPic ] = useState('')
   const [ commentAuthorName, setCommentAuthorName ] = useState('')
   useEffect(() => {
     const fetchBrief = async () => {
-      console.log(author)
       const res = await axios.post("https://quilog-server.vercel.app/infos/users/userBrief", { userId: author });
       if (res) {
-        console.log("Author data:", res.data);
         setCommentAuthorName(res.data.username);
         setCommentAuthorPic(res.data.profilePic);
       }

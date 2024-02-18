@@ -66,6 +66,10 @@
   align-items: center;
   justify-content: center;
 }
+.feed_item_stats_box .feed_item_stats_box_item button img{
+  height: 20px;
+  width: 20px;
+}
 .feed_item_stats_box .feed_item_stats_box_item button:hover{
   cursor: pointer;
 }
@@ -94,10 +98,19 @@
 .feed_item .comment_section_container input:focus{
   outline: none;
 }
+.comment_section_container .input_submitter button{
+  height: fit-content;
+  width: fit-content;
+  padding: 2px 15px;
+  border-radius: 2em;
+  background-color: rgb(86, 115, 203);
+  color: white;
+}
 .comment_container{
   display: flex;
   flex-direction: column;
   row-gap: 2vh;
+  width: 100%;
 }
 .comment_item{
   display: flex;
@@ -106,6 +119,7 @@
   justify-content: flex-start;
   column-gap: 2vw;
   padding-left: 2vw;
+  width: 100%;
 }
 
 .comment_item .comment_item_img img{
@@ -117,10 +131,12 @@
 }
 .comment_item .comment_body p:nth-child(1){
   font-weight: bold;
+  font-size: 15px;
 }
 .comment_item .comment_body p:nth-child(2){
-  width: 100%;
+  width: 80%;
   overflow-wrap: break-word;
+  font-size: 12px;
 }
 .comment_item .comment_body p:nth-child(3){
   width: 100%;

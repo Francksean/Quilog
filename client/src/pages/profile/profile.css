@@ -32,6 +32,7 @@
 .profile_container_user_infos_main .profile_pic{
   height: 250px;
   width: 250px;
+  padding: 45px;
   border-radius: 50%;
   background-size: contain;
   border: 5px solid #9B9898;
@@ -39,6 +40,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.profile_container_user_infos_main .profile_pic img{
+  height: 100%;
+  width: 100%;
 }
 
 .profile_container_user_infos_main .profile_container_user_infos_main_right{
