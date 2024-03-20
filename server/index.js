@@ -1,18 +1,16 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
-import { userAuthRouter } from './Routes/usersAuth.js'
-import { userInfosRouter } from './Routes/usersInfos.js'
-import { articlesRouter } from './Routes/articles.js'
+import { userRouter } from './routes/users-router.js'
+import { articlesRouter } from './routes/articles-router.js'
 
 const app = express()
 
 app.use(express.json())
 app.use(cors())
 
-app.use("/auth", userAuthRouter)
-app.use("/infos", userInfosRouter)
-app.use("/content", articlesRouter)
+app.use("/users", userRouter)
+app.use("/articles", articlesRouter)
 
 mongoose.connect("mongodb+srv://seandjissou:adminquilog@quilogcluster.ivatx2e.mongodb.net/Quilog?retryWrites=true&w=majority")
 

@@ -1,12 +1,6 @@
-import express from 'express'
-
 import { ArticleModel } from '../models/Articles.js';
-import { UserModel } from '../models/Users.js';
 
-
-const router = express.Router()
-
-router.post("/submit", async(req, res)=>{
+export const submitArticle = async(req, res)=>{
   const { authorId, title, content } = req.body;
   const newArticle = await ArticleModel.create({
     author: authorId,
@@ -15,19 +9,18 @@ router.post("/submit", async(req, res)=>{
     datePosted : new Date(),
   })
   if(newArticle){
-    const addToAuthorArticles = await UserModel.updateOne(
-      { "_id":newArticle.author },
-      { 
-        $push: {articles: newArticle._id}
-      }
-      )
+  const addToAuthorArticles = await UserModel.updateOne(
+    { "_id":newArticle.author },
+    { 
+      $push: {articles: newArticle._id}
     }
-    res.send({ message:" article submitted successfully !", aricle:newArticle})
-})
+    )
+  }
+  res.send({ message:" article submitted successfully !", article: newArticle})
+}
 
-
-router.post("/delete", async(req, res) =>{
-  const { articleId } = req.body
+export const deleteArticleById = async(req, res) =>{
+  const { articleId } = req.params
   const article = await ArticleModel.findOne({"_id":articleId})
   if(article){
     await UserModel.updateOne(
@@ -41,14 +34,14 @@ router.post("/delete", async(req, res) =>{
   }else{
     res.send({message : "no article found "})
   }
-})
+}
 
-router.get("/feed", async(req, res)=>{
+export const fetchFeed = async(req, res)=>{
   const articles = await ArticleModel.find({})
   res.json({articles})
-})
+}
 
-router.post("/postComment", async(req, res)=>{
+export const postComment = async(req, res)=>{
   const { articleId, content, authorId} = req.body
   const addComment = await ArticleModel.updateOne(
     {"_id": articleId},
@@ -65,9 +58,8 @@ router.post("/postComment", async(req, res)=>{
   if(addComment){
     res.send({ message: "comment posted successfully !"})
   }
-})
-
-router.post("/likeArticle", async(req, res)=>{
+}
+export const likeArticle = async(req, res)=>{
   const { articleId, userId, value } = req.body
   const incLikes = await ArticleModel.updateOne(
     {"_id": articleId },
@@ -93,9 +85,5 @@ router.post("/likeArticle", async(req, res)=>{
       }
     )
   }
-})
+}
 
-
-
-
-export { router as articlesRouter }
