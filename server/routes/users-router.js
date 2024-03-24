@@ -10,7 +10,7 @@ router.post("/login", usersController.loginUser);
 
 router.post("/users/update/fields", usersController.updateUserInfos )
 
-router.get("/userBrief/:userId", usersController.getUserBrief )
+router.get("/getUserBrief/:userId", usersController.getUserBrief )
 
 router.post("/getUser/:userId", usersController.getUserById)
 

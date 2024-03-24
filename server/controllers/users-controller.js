@@ -9,19 +9,19 @@ export const registerUser = async (req, res) => {
   const mail = await UserModel.findOne({ email });
 
   if(user){
-    res.json({ message: "Username already exists" });
+    res.send({ message: "Username already exists" });
   } else if(mail){
     res.json({ message: "Email address already exists" });
   } else {
     const hashPassword = await bcrypt.hash(password, 10);
-    await UserModel.create({
+    const newUser = await UserModel.create({
       username,
       password: hashPassword,
       email,
       articles: [],
       profilePic: undefined,
     });
-    res.json({ message: "User registered successfully!" });
+    res.send({ message: "User registered successfully!", results: newUsere  });
   }
 }
 export const loginUser = async (req, res) => {
@@ -32,12 +32,12 @@ export const loginUser = async (req, res) => {
     const passwordMatch = await bcrypt.compare(password, user.password);
     if(passwordMatch){
       const token = jwt.sign({ username, userId: user._id }, 'secret');
-      res.json({ message: "You logged in successfully!", token, userId: user._id });
+      res.send({ message: "You logged in successfully!", token, userId: user._id });
     } else {
-      res.json({ message: "Incorrect password" });
+      res.send({ message: "Incorrect password" });
     }
   } else {
-    res.json({ message: "User not found" });
+    res.send({ message: "User not found" });
   }
 }
 
@@ -70,7 +70,7 @@ export const getUserById =  async(req, res) => {
   const { userId } = req.params;
   const user = await UserModel.findOne({ "_id":userId });
   if(user){
-    res.json({ user })
+    res.send({ user })
   }
 }
 

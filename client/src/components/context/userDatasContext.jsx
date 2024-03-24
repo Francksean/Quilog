@@ -15,7 +15,7 @@ export const UserProvider = ({ children }) => {
       try {
         const userId = localStorage.getItem("userId");
         if (userId) {
-          const res = await axios.post("https://quilog-server.vercel.app/infos/users", { userId: userId });
+          const res = await axios.post(`https://quilog-server.vercel.app/users/getUser/${userId}`);
           setUser(res.data.user);
           setIsUserLoggedIn(false);
           setIsUserDatasUpdated(false)

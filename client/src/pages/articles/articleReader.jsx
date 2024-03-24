@@ -17,7 +17,7 @@ function ArticleReader() {
 
   useEffect(()=>{
     const fetchFeed = async()=>{
-      const feed = await axios.get("https://quilog-server.vercel.app/content/feed")
+      const feed = await axios.get("https://quilog-server.vercel.app/articles/feed")
       setFeedArticles(feed.data.articles)
     }
     fetchFeed()
@@ -86,7 +86,7 @@ function FeedItem({ articleItem }) {
       setLikeIcon(likeIconActive)
     }
     const fetchAuthorBrief = async () => {
-      const briefFetched = await axios.post("https://quilog-server.vercel.app/infos/users/userBrief", { userId: articleItem.author })
+      const briefFetched = await axios.post(`https://quilog-server.vercel.app/infos/users/getUserBrief/${articleItem.author}`)
       if(briefFetched){
         setAuthorPic( briefFetched.data.profilePic )
         setAuthorName( briefFetched.data.username)
@@ -107,7 +107,7 @@ function FeedItem({ articleItem }) {
     if(likeIcon == likeIconBase){
       setLikeIcon(likeIconActive)
       setArticleLikes(articleLikes + 1)
-      const likeSender = await axios.post("http://localhost:3000/content/likeArticle",
+      const likeSender = await axios.post("http://localhost:3000/articles/likeArticle",
       { 
         articleId: articleItem._id,
         userId: localStorage.getItem("userId"),
@@ -117,7 +117,7 @@ function FeedItem({ articleItem }) {
     }else{
       setLikeIcon(likeIconBase)
       setArticleLikes(articleLikes - 1)
-      const likeSender = await axios.post("http://localhost:3000/content/likeArticle",
+      const likeSender = await axios.post("http://localhost:3000/articles/likeArticle",
       { 
         articleId: articleItem._id,
         userId: localStorage.getItem("userId"),
@@ -128,7 +128,7 @@ function FeedItem({ articleItem }) {
 
   const commentSubmitter = async ()=>{
     if(commentValue != ""){
-      const res = await axios.post("https://quilog-server.vercel.app/content/postComment", {
+      const res = await axios.post("https://quilog-server.vercel.app/articles/postComment", {
         articleId: articleItem._id, 
         content: commentValue,
         authorId: localStorage.getItem("userId")
@@ -218,7 +218,7 @@ function CommentItemElement ({author, commentText, datePosted}) {
   const [ commentAuthorName, setCommentAuthorName ] = useState('')
   useEffect(() => {
     const fetchBrief = async () => {
-      const res = await axios.post("https://quilog-server.vercel.app/infos/users/userBrief", { userId: author });
+      const res = await axios.post(`https://quilog-server.vercel.app/infos/users/getUserBrief/${author}`);
       if (res) {
         setCommentAuthorName(res.data.username);
         setCommentAuthorPic(res.data.profilePic);
