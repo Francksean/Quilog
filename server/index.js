@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import { userRouter } from './routes/users-router.js'
+import { userAuthRouter } from './routes/users-auth-router.js'
 import { articlesRouter } from './routes/articles-router.js'
 import * as auth from './middlewares/auth.js'
 
@@ -11,6 +12,7 @@ app.use(express.json())
 app.use(cors())
 
 app.use("/users", auth.verifyToken, userRouter)
+app.use("/usersAuth", userAuthRouter)
 app.use("/articles", auth.verifyToken, articlesRouter)
 
 mongoose.connect("mongodb+srv://seandjissou:adminquilog@quilogcluster.ivatx2e.mongodb.net/Quilog?retryWrites=true&w=majority")

@@ -4,10 +4,6 @@ const router = express.Router();
 
 import * as usersController from '../controllers/users-controller.js'
 
-router.post("/register", usersController.registerUser );
-
-router.post("/login", usersController.loginUser);
-
 router.post("/users/update/fields", usersController.updateUserInfos )
 
 router.get("/getUserBrief/:userId", usersController.getUserBrief )

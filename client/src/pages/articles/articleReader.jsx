@@ -17,7 +17,11 @@ function ArticleReader() {
 
   useEffect(()=>{
     const fetchFeed = async()=>{
-      const feed = await axios.get("https://quilog-server.vercel.app/articles/feed")
+      const feed = await axios.get("https://quilog-server.vercel.app/articles/feed",{
+        headers:{
+          Authorization : localStorage.getItem('token')
+        }
+      })
       setFeedArticles(feed.data.articles)
     }
     fetchFeed()
@@ -86,7 +90,11 @@ function FeedItem({ articleItem }) {
       setLikeIcon(likeIconActive)
     }
     const fetchAuthorBrief = async () => {
-      const briefFetched = await axios.post(`https://quilog-server.vercel.app/infos/users/getUserBrief/${articleItem.author}`)
+      const briefFetched = await axios.post(`https://quilog-server.vercel.app/infos/users/getUserBrief/${articleItem.author}`,{
+        headers:{
+          Authorization : localStorage.getItem('token')
+        }
+      })
       if(briefFetched){
         setAuthorPic( briefFetched.data.profilePic )
         setAuthorName( briefFetched.data.username)
@@ -112,8 +120,11 @@ function FeedItem({ articleItem }) {
         articleId: articleItem._id,
         userId: localStorage.getItem("userId"),
         value: 1
-      }
-      )
+      },{
+        headers:{
+          Authorization : localStorage.getItem('token')
+        }
+      })
     }else{
       setLikeIcon(likeIconBase)
       setArticleLikes(articleLikes - 1)
@@ -122,6 +133,10 @@ function FeedItem({ articleItem }) {
         articleId: articleItem._id,
         userId: localStorage.getItem("userId"),
         value: -1
+      },{
+        headers:{
+          Authorization : localStorage.getItem('token')
+        }
       })
     }
   }
@@ -132,6 +147,10 @@ function FeedItem({ articleItem }) {
         articleId: articleItem._id, 
         content: commentValue,
         authorId: localStorage.getItem("userId")
+      },{
+        headers:{
+          Authorization : localStorage.getItem('token')
+        }
       })
       if(res){
         alert(res.data.message)

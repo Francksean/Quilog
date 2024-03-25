@@ -40,9 +40,13 @@ function Login() {
 
   const getDatas = async (usrnameParam, passwordParam) => {
     try {
-      const res = await axios.post("https://quilog-server.vercel.app/users/login", {
+      const res = await axios.post("https://quilog-server.vercel.app/usersAuth/login", {
         username: usrnameParam,
         password: passwordParam,
+      },{
+        headers:{
+          Authorization : localStorage.getItem('token')
+        }
       });
 
       if (res.data) {
@@ -135,10 +139,14 @@ function Signup (){
 
   async function sendDatas(usrnameParam, emailParam, passwordParam) {
     try {
-      const res = await axios.post("https://quilog-server.vercel.app/users/register", {
+      const res = await axios.post("https://quilog-server.vercel.app/usersAuth/register", {
         username: usrnameParam,
         password: passwordParam,
         email: emailParam
+      },{
+        headers:{
+          Authorization : localStorage.getItem('token')
+        }
       });
   
       if (res.data) {
